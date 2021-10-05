@@ -1,3 +1,7 @@
+// Ben Jordan
+// 10/4/21
+// Rock Paper Scissors
+
 function round(){
     let victory;
     let human;
