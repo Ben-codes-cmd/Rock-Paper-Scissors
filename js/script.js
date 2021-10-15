@@ -38,6 +38,7 @@ function setMessage(victory, computerChoice, humanChoice) {
 }
 
 function setScore(human, computer){
+    // sets visual score, not values
     score.innerHTML = `${human}-${computer}`;
 }
 
@@ -70,9 +71,11 @@ function updateGame(human, computer) {
     setMessage(victory, computer, human);
     setScore(wins, losses);
     if(wins === 5){
+        outcome.classList.add("winner");
         endGame(true);
     }
     else if(losses === 5){
+        outcome.classList.add("loser");
         endGame(false);
     }
 }
@@ -92,9 +95,8 @@ function endGame(victory){
 }
 
 function restart(e){
-    activate();
-    setScore(0, 0);
     body.removeChild(playAgain);
+    init();
 }
 
 function activate(){
@@ -105,6 +107,13 @@ function deactivate(){
     buttons.forEach(button => button.removeEventListener("click", round));
 }
 
+function init(){
+    setScore(0, 0);
+    activate();
+    selection.innerHTML = "Make a selection";
+    outcome.innerHTML = "";
+    outcome.classList.remove("winner", "loser");
+}
 // Frequently referenced elements
 const score = document.querySelector(".score");
 
@@ -124,5 +133,4 @@ let playAgain = document.createElement('button');
 // startup
 
 let wins = 0, losses = 0;
-
-activate();
+init();
