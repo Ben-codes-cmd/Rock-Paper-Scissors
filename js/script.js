@@ -9,7 +9,7 @@ function round(e) {
 
     while (!isWinner) {
         // get data from event
-        human = e.target.id;
+        human = e.currentTarget.id;
         computer = generateChoice();
 
         // evaluate matchup
@@ -99,6 +99,7 @@ function restart(e){
     init();
 }
 
+// selection panel management
 function activate(){
     buttons.forEach(button => button.addEventListener('click', round));
 }
@@ -114,6 +115,7 @@ function init(){
     outcome.innerHTML = "";
     outcome.classList.remove("winner", "loser");
 }
+
 // Frequently referenced elements
 const score = document.querySelector(".score");
 
@@ -131,6 +133,5 @@ let playAgain = document.createElement('button');
     playAgain.innerHTML = "Play Again";
 
 // startup
-
 let wins = 0, losses = 0;
 init();

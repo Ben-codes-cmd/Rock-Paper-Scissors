@@ -18,14 +18,19 @@ h1{
     height: 20vw;
     background-color: slategray;
     border-radius: 10%;
+    padding:0px;
 }
 
 .option:hover{
-    background-color: lightblue;
+    background-color: white;
 }
 
 .score{
     font-size: 25px;
+}
+
+.score:hover{
+    font-size: 40px;
 }
 
 .selection{
@@ -46,4 +51,16 @@ h1{
 .loser{
     color: red;
 
+}
+
+.image{
+    width: 90%;
+    height: 80%;
+    margin: 5px 5px 0px 5px;
+    border-radius: 10%;
+}
+.container p{
+    margin: 0px;
+    height: 20%;
+    font-size: 2vw;
 }
