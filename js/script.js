@@ -2,44 +2,43 @@
 // 10/4/21
 // Rock Paper Scissors
 
-function round() {
-    let victory;
+function round(e) {
     let human;
     let computer;
-    let winner = false;
+    let isWinner = false;
 
-    while (!winner) {
-        human = getInput();
+    while (!isWinner) {
+        // get data from event
+        human = e.target.id;
         computer = generateChoice();
-
-        console.log(`You have chosen ${human}... Computer has chosen ${computer}`); // display matchup
 
         // evaluate matchup
 
         if (human === computer) {
-            console.log("The match ends in a tie! Go again.");
+            outcome.innerHTML = "The match ends in a tie. Go again!";
         }
         else {
-            winner = true;
-            victory = getWinner(human, computer); // determine winner
-            display(victory, computer, human) // display the outcome
-            return victory;
+            updateGame(human, computer);
+            break;
         }
     }
 }
-function getInput() {
-    let raw;
-    while (true) {
-        raw = prompt("Please input rock, paper or scissors: ").toLowerCase();
 
-        // verify raw string
-
-        if (raw === "rock" || raw === "paper" || raw === "scissors") {
-            return raw;
-        } else {
-            console.log("Please input a valid choice.");
-        }
+function setMessage(victory, computerChoice, humanChoice) {
+    // display matchup
+    selection.innerHTML = `You have chosen ${humanChoice}... Computer has chosen ${computerChoice}`; 
+    
+    // display outcome
+    if (victory) {
+        outcome.innerHTML = `Victory! ${humanChoice} beats ${computerChoice}.`;
     }
+    else {
+        outcome.innerHTML = `Defeat! ${computerChoice} beats ${humanChoice}.`;
+    }
+}
+
+function setScore(human, computer){
+    score.innerHTML = `${human}-${computer}`;
 }
 
 function generateChoice() {
@@ -65,40 +64,65 @@ function getWinner(human, computer) {
     return res;
 }
 
-function display(victory, computer, human) {
-    // Log outcome
-    if (victory) {
-        console.log(`Victory! ${human} beats ${computer}.`);
+function updateGame(human, computer) {
+    victory = getWinner(human, computer);
+    victory ? wins++: losses++; // increment
+    setMessage(victory, computer, human);
+    setScore(wins, losses);
+    if(wins === 5){
+        endGame(true);
     }
-    else {
-        console.log(`Defeat! ${computer} beats ${human}.`);
-    }
-}
-
-function game(num) {
-    let wins = 0
-    const rounds = num;
-    let minWins = Math.ceil(rounds / 2); // determine best # of wins out of max rounds
-
-    for (let i = 1; i < rounds + 1; i++) {
-
-        console.log(`Round ${i}:`) // display current round
-
-        if (round()) { // True represents a win
-            wins++;
-        }
-
-        console.log(`${wins}-${i - wins}`) // print score ex. 1-2
-
-        if (minWins - wins > rounds - i) { // check if the game is won
-            console.log(`Better luck next time...you just got pseudo-randomly owned!`);
-            break
-        }
-        else if (wins >= minWins) {
-            console.log(`Congratulations! You have won the series with the best ${wins}/${rounds} wins`);
-            break
-        }
+    else if(losses === 5){
+        endGame(false);
     }
 }
 
-game(7);
+function endGame(victory){
+    if(victory){
+        outcome.innerHTML = "Congratulations, you win!";
+    }
+    else{
+        outcome.innerHTML = "Computer wins! You just got pseudo-randomly owned!";
+    }
+    wins = 0;
+    losses = 0;
+    deactivate();
+    body.appendChild(playAgain);
+    playAgain.addEventListener("click", restart);
+}
+
+function restart(e){
+    activate();
+    setScore(0, 0);
+    body.removeChild(playAgain);
+}
+
+function activate(){
+    buttons.forEach(button => button.addEventListener('click', round));
+}
+
+function deactivate(){
+    buttons.forEach(button => button.removeEventListener("click", round));
+}
+
+// Frequently referenced elements
+const score = document.querySelector(".score");
+
+const selection = document.querySelector(".selection");
+
+const outcome = document.querySelector(".outcome");
+
+const buttons = Array.from(document.querySelectorAll(".option"));
+
+const body = document.querySelector("body");
+
+// play again button to be frequently removed
+let playAgain = document.createElement('button');
+    playAgain.classList.add("again");
+    playAgain.innerHTML = "Play Again";
+
+// startup
+
+let wins = 0, losses = 0;
+
+activate();

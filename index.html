@@ -14,25 +14,27 @@ Rock Paper Scissors
 
     <!-- link to external files -->
     
-    <script src="js/script.js"></script>
+    <script src="js/script.js" defer></script>
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
     <h1>Rock, paper, scissors, shoot!</h1>
 <!-- add three options -->
+    <p class="score"></p>
     <div class="container">
-        <div class = "rock option">
+        <div class = "option" id="rock">
             <p>Rock</p>
         </div>
 
-        <div class = "paper option">
+        <div class = "option" id="paper">
             <p>Paper</p>
 
         </div>
-        <div class = "scissors option">
+        <div class = "option" id="scissors">
             <p>Scissors</p>
         </div>
     </div>
-    <h2>Make a selection</h2>
+    <h2 class="selection">Make a selection</h2>
+    <h2 class="outcome"></h2>
 </body>
 </html>
