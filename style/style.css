@@ -16,13 +16,16 @@ h1{
 .option{
     flex: 1;
     height: 20vw;
-    background-color: slategray;
+    background-color: white;
+    border-style: solid;
     border-radius: 10%;
+    border-width: 1%;
+    border-color: white;
     padding:0px;
 }
 
 .option:hover{
-    background-color: white;
+    border-color: red;
 }
 
 .score{
