@@ -3,6 +3,7 @@
 // Rock Paper Scissors
 
 function round(e) {
+    e.stopPropagation();
     let human;
     let computer;
     let isWinner = false;
@@ -90,12 +91,12 @@ function endGame(victory){
     wins = 0;
     losses = 0;
     deactivate();
-    body.appendChild(playAgain);
-    playAgain.addEventListener("click", restart);
+    document.body.appendChild(playAgain);
+    playAgain.addEventListener("click", restart, once=true);
 }
 
 function restart(e){
-    body.removeChild(playAgain);
+    document.body.removeChild(playAgain);
     init();
 }
 
@@ -125,7 +126,9 @@ const outcome = document.querySelector(".outcome");
 
 const buttons = Array.from(document.querySelectorAll(".option"));
 
-const body = document.querySelector("body");
+document.body.addEventListener("click", () => {
+    console.log("clicked");
+});
 
 // play again button to be frequently removed
 let playAgain = document.createElement('button');
